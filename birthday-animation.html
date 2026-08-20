@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- MOBILE PAR PC VIEW FORCE KARNE KE LIYE VIEWPORT WIDTH FIX KI HAI -->
-  <meta name="viewport" content="width=1280, viewport-fit=cover" />
+  
+  <!-- ✨ MAGIC FIX: Ye line mobile browser ko order degi ki website ko exactly PC (Desktop Mode) ki tarah open kare -->
+  <meta name="viewport" content="width=1024" />
+  
   <title>Happy Birthday ♥ — a little film</title>
   <meta name="theme-color" content="#f7e7dc" />
 
@@ -15,7 +17,7 @@
   
   <style>
     /* ============================================================
-       HAPPY BIRTHDAY — CSS
+       HAPPY BIRTHDAY — CSS (PURE STABLE VERSION)
        ============================================================ */
     :root{
       var(--paper-0):  #fff6ee;
@@ -36,30 +38,15 @@
     *{ box-sizing:border-box; margin:0; padding:0; }
     html, body{ height:100%; }
 
-    /* BODY CSS UPDATED: PC WALI SCREEN KO CENTER MEIN RAKHNE KE LIYE */
     body{
       background:#12060c;
       overflow:hidden;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
       cursor:auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-      width: 100%;
-      height: 100vh;
     }
 
-    /* SCENE CSS UPDATED: HAMESHA 16:9 (PC RATIO) PAR LOCK RAHEGA */
-    .scene{ 
-      position: relative; 
-      width: 100%;
-      height: 100%;
-      max-height: 56.25vw;
-      overflow: hidden;
-      background: #12060c;
-    }
+    .scene{ position:fixed; inset:0; overflow:hidden; }
 
     .sr-only{
       position:absolute; width:1px; height:1px; padding:0; margin:-1px;
@@ -258,6 +245,7 @@
     }
     .hl__word{
       display:inline-block;
+      white-space: nowrap; /* ✨ SECOND FIX: Text wrap preventer - naam kabhi kata hua nahi dikhega */
       font-weight:900;
       font-size:clamp(52px, 15vw, 168px);
       letter-spacing:-.02em;
@@ -334,6 +322,7 @@
     .wish__hero{
       font-family:"Great Vibes", cursive; font-weight:400;
       font-size:clamp(40px, 5vw, 86px);
+      white-space: nowrap; /* ✨ SECOND FIX: Protects final wish message on smaller devices */
       line-height:1.1; margin:-.02em 0 .06em;
       background:linear-gradient(180deg, #e85a83 0%, #c41f52 50%, #9c0f42 100%);
       -webkit-background-clip:text; background-clip:text; color:transparent;
@@ -571,7 +560,7 @@
 
   <p class="sr-only">Happy Birthday. Here&rsquo;s to a wonderful year ahead.</p>
 
-  <!-- DATA DECODER SCRIPT (MOVED TO BOTTOM): Ab ye DOM load hone ke baad aur animation run hone se pehle execute hoga -->
+  <!-- DATA DECODER SCRIPT (SAFELY AT THE BOTTOM) -->
   <script>
     (function() {
         const params = new URLSearchParams(window.location.search);
@@ -601,11 +590,8 @@
     })();
   </script>
 
-  <!-- PURANA WALA ORIGINAL JAVASCRIPT CODE (JO PERFECT CHAL RAHA THA) -->
+  <!-- ORIGINAL UNTOUCHED GSAP ANIMATION LOGIC -->
   <script type="module">
-    /* ============================================================
-       HAPPY BIRTHDAY — JS
-       ============================================================ */
     import gsap from 'https://esm.sh/gsap';
 
     gsap.registerPlugin({
