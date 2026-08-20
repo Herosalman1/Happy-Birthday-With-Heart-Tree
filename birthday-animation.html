@@ -315,9 +315,6 @@
       opacity:0; pointer-events:none;
     }
     
-    /* ------------------------------------------------------------- 
-       FIX: Changed top and bottom clip-path to -30% to stop clipping
-       ------------------------------------------------------------- */
     .wish__hero{
       font-family:"Great Vibes", cursive; font-weight:400;
       font-size:clamp(40px, 5vw, 86px);
@@ -355,7 +352,6 @@
     .wish.is-in .wish__heroWrap::before{ animation:hlin .8s ease .3s forwards, hlpulse 3.4s ease-in-out 1.7s infinite; }
     .wish.is-in .wish__heroWrap::after{ animation:twk 2.6s ease-in-out 1.6s infinite; }
     
-    /* FIX: Changed animation clip-path as well */
     @keyframes write{ from{ clip-path:inset(-30% 100% -30% -10%); } to{ clip-path:inset(-30% -10% -30% -10%); } }
     
     @keyframes sheen{ 0%,18%{ background-position:0% 50%; } 60%,100%{ background-position:100% 50%; } }
@@ -402,6 +398,37 @@
   </style>
 </head>
 <body>
+  
+  <!-- DATA DECODER SCRIPT: Animation run hone se pehle HTML update karta hai -->
+  <script>
+    (function() {
+        const params = new URLSearchParams(window.location.search);
+        const encodedData = params.get('d');
+        if(encodedData) {
+            try {
+                // Decode from base64 to JSON object
+                const data = JSON.parse(decodeURIComponent(escape(atob(encodedData))));
+                
+                // Update 2nd Page Texts
+                if(data.l1) document.getElementById('kEyebrow').innerHTML = data.l1;
+                if(data.l2) {
+                    const parts = data.l2.split(' ');
+                    document.getElementById('wLine1').innerHTML = parts[0] || '';
+                    document.getElementById('wLine2').innerHTML = parts.slice(1).join(' ') || '';
+                }
+                if(data.l3) document.getElementById('kSub').innerHTML = data.l3;
+                
+                // Update 3rd Page Texts
+                if(data.l4) document.getElementById('wEyebrow').innerHTML = data.l4;
+                if(data.l5) document.getElementById('wHero').innerHTML = data.l5;
+                if(data.l6) document.getElementById('wEyebrow2').innerHTML = data.l6;
+            } catch(e) {
+                console.error("Invalid link data");
+            }
+        }
+    })();
+  </script>
+
   <main class="scene">
     <canvas id="tree" class="tree" aria-label="A blossom tree grows and blooms into a heart made of petals" role="img"></canvas>
 
@@ -541,7 +568,7 @@
     <div class="wish" id="wish" aria-hidden="true">
       <p class="wish__eyebrow" id="wEyebrow" style="position: relative; top: 0px; left: 10px; font-size: 18px;">and&hellip;stay my best friend forever...</p>
       <h1 class="wish__hero" id="wHero" style="position: relative; top: 10px; left: 0px; font-size: 70px;">𝐻𝐴𝑃𝑃𝑌 𝐵𝐼𝑅𝑇𝐻𝐷𝐴𝑌</h1>      <span class="wish__rule" id="wRule"></span>
-   <p class="wish__eyebrow" id="wEyebrow" style="position: relative; top: -10px; left: 0px; font-size: 16px;">God bless you, Priya Kumari</p>
+      <p class="wish__eyebrow" id="wEyebrow2" style="position: relative; top: -10px; left: 0px; font-size: 16px;">God bless you, Priya Kumari</p>
     </div>
     <button class="replay" id="replay" type="button" hidden>
       <svg viewBox="0 0 24 24" aria-hidden="true" width="15" height="15">
@@ -1418,7 +1445,7 @@
     document.body.addEventListener('click', function() {
       var audio = document.getElementById('hiddenAudio');
       audio.play(); 
-    }, { once: true }); // '{ once: true }' se ye click sirf pehli baar kaam karega, uske baad audio apne aap loop hoti rahegi
+    }, { once: true }); 
   </script>
 </body>
 </html>
