@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  
+  <!-- ✨ MAGIC FIX 1: Mobile browser ko Desktop scale par lock karna -->
+  <meta name="viewport" content="width=1024" />
+  
   <title>Happy Birthday ♥ — a little film</title>
-  <meta name="theme-color" content="#f7e7dc" />
+  <meta name="theme-color" content="#000000" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,7 +17,7 @@
   
   <style>
     /* ============================================================
-       HAPPY BIRTHDAY — CSS
+       HAPPY BIRTHDAY — CSS (PURE STABLE VIDEO PLAYER VERSION)
        ============================================================ */
     :root{
       var(--paper-0):  #fff6ee;
@@ -33,17 +36,31 @@
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-    html, body{ height:100%; }
-
+    
+    /* ✨ MAGIC FIX 2: Screen ko "Black" background dena aur center mein align karna */
+    html, body{ height:100%; width: 100%; }
     body{
-      background:#12060c;
+      background:#000; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow:hidden;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
       cursor:auto;
     }
 
-    .scene{ position:fixed; inset:0; overflow:hidden; }
+    /* ✨ MAGIC FIX 3: Scene ko exactly 16:9 Video Player Layout mein lock karna */
+    .scene{ 
+      position: relative; 
+      width: 100vw;
+      height: 56.25vw; /* 16:9 Aspect Ratio */
+      max-width: 177.77vh; /* Super wide PC screens ke liye limit */
+      max-height: 100vh;
+      overflow:hidden; 
+      background: #12060c;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    }
 
     .sr-only{
       position:absolute; width:1px; height:1px; padding:0; margin:-1px;
@@ -201,9 +218,10 @@
       mix-blend-mode:screen;
       will-change:transform, opacity;
     }
-    .blob--1{ width:58vmax; height:58vmax; left:-18vmax; top:-16vmax; background:radial-gradient(circle, rgba(255,130,160,.9), transparent 62%); }
-    .blob--2{ width:46vmax; height:46vmax; right:-14vmax; top:22vmax; background:radial-gradient(circle, rgba(255,90,120,.75), transparent 64%); }
-    .blob--3{ width:52vmax; height:52vmax; left:24vmax; bottom:-22vmax; background:radial-gradient(circle, rgba(180,20,70,.8), transparent 66%); }
+    /* Fixed vmax overflow on mobile by substituting with stable vw */
+    .blob--1{ width:58vw; height:58vw; left:-18vw; top:-16vw; background:radial-gradient(circle, rgba(255,130,160,.9), transparent 62%); }
+    .blob--2{ width:46vw; height:46vw; right:-14vw; top:22vw; background:radial-gradient(circle, rgba(255,90,120,.75), transparent 64%); }
+    .blob--3{ width:52vw; height:52vw; left:24vw; bottom:-22vw; background:radial-gradient(circle, rgba(180,20,70,.8), transparent 66%); }
 
     .fgrid{
       position:absolute; inset:-6%;
@@ -219,7 +237,7 @@
     .camera{
       position:absolute; inset:0;
       display:flex; flex-direction:column; justify-content:center; align-items:center;
-      gap:clamp(4px,1.2vh,12px);
+      gap:clamp(4px, 0.7vw, 12px);
       padding:0 6vw; text-align:center;
       will-change:transform;
     }
@@ -230,7 +248,7 @@
       letter-spacing:.08em;
       color:#ffd7c8;
       opacity:0; transform:translateY(10px);
-      margin-bottom:clamp(2px,1vh,10px);
+      margin-bottom:clamp(2px, 0.6vw, 10px);
     }
 
     .headline{ font-family:"Fraunces", Georgia, serif; line-height:.92; }
@@ -242,6 +260,7 @@
     }
     .hl__word{
       display:inline-block;
+      white-space: nowrap; /* Txt ko tootne se rokne ke liye */
       font-weight:900;
       font-size:clamp(52px, 15vw, 168px);
       letter-spacing:-.02em;
@@ -252,12 +271,12 @@
 
     .uline{
       width:clamp(150px, 40vw, 380px); height:auto;
-      margin-top:clamp(4px,1.4vh,14px);
+      margin-top:clamp(4px, 0.8vw, 14px);
       color:var(--gold-1);
       filter:drop-shadow(0 2px 8px rgba(255,180,90,.5));
     }
     .kSub{
-      margin-top:clamp(12px,2.4vh,26px);
+      margin-top:clamp(12px, 1.4vw, 26px);
       font-family:"Cormorant Garamond", Georgia, serif;
       font-weight:500; font-style:italic;
       font-size:clamp(14px, 3.4vw, 24px);
@@ -267,7 +286,7 @@
     }
 
     .bar{
-      position:absolute; left:0; right:0; height:16vh;
+      position:absolute; left:0; right:0; height: 16%;
       background:#12040b; z-index:3; will-change:transform; pointer-events:none;
     }
     .bar--top{ top:0; }
@@ -318,6 +337,7 @@
     .wish__hero{
       font-family:"Great Vibes", cursive; font-weight:400;
       font-size:clamp(40px, 5vw, 86px);
+      white-space: nowrap; /* Txt ko tootne se rokne ke liye */
       line-height:1.1; margin:-.02em 0 .06em;
       background:linear-gradient(180deg, #e85a83 0%, #c41f52 50%, #9c0f42 100%);
       -webkit-background-clip:text; background-clip:text; color:transparent;
@@ -555,7 +575,7 @@
 
   <p class="sr-only">Happy Birthday. Here&rsquo;s to a wonderful year ahead.</p>
 
-  <!-- DATA DECODER SCRIPT (MOVED TO BOTTOM): Ab ye DOM load hone ke baad aur animation run hone se pehle execute hoga -->
+  <!-- DATA DECODER SCRIPT (SAFELY AT THE BOTTOM) -->
   <script>
     (function() {
         const params = new URLSearchParams(window.location.search);
@@ -585,10 +605,8 @@
     })();
   </script>
 
+  <!-- PURE ORIGINAL & STABLE JAVASCRIPT CODE -->
   <script type="module">
-    /* ============================================================
-       HAPPY BIRTHDAY — JS
-       ============================================================ */
     import gsap from 'https://esm.sh/gsap';
 
     gsap.registerPlugin({
