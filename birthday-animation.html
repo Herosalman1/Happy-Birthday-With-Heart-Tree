@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- PURE ORIGINAL VIEWPORT: No hacks, no freeze -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Happy Birthday ♥ — a little film</title>
   <meta name="theme-color" content="#f7e7dc" />
@@ -14,7 +15,7 @@
   
   <style>
     /* ============================================================
-       HAPPY BIRTHDAY — CSS
+       HAPPY BIRTHDAY — CSS (PERFECT MOBILE + PC SPACING)
        ============================================================ */
     :root{
       var(--paper-0):  #fff6ee;
@@ -242,6 +243,7 @@
     }
     .hl__word{
       display:inline-block;
+      white-space: nowrap; /* Naam lamba ho toh cut-off rokiyega */
       font-weight:900;
       font-size:clamp(52px, 15vw, 168px);
       letter-spacing:-.02em;
@@ -317,7 +319,8 @@
     
     .wish__hero{
       font-family:"Great Vibes", cursive; font-weight:400;
-      font-size:clamp(40px, 5vw, 86px);
+      font-size:clamp(36px, 7.5vw, 86px); /* Responsive Font (No inline 70px) */
+      white-space: nowrap; /* Mobile par lamba naam tut kar gayab hone se bachayega */
       line-height:1.1; margin:-.02em 0 .06em;
       background:linear-gradient(180deg, #e85a83 0%, #c41f52 50%, #9c0f42 100%);
       -webkit-background-clip:text; background-clip:text; color:transparent;
@@ -387,13 +390,14 @@
       background-size:300px; opacity:.05; mix-blend-mode:overlay;
     }
 
-    @media (prefers-reduced-motion: reduce){
-      .hero, .flood, .field, .bloom, .hero__ring{ display:none !important; }
-      .wish__eyebrow, .wish__rule, .wish__sub{ opacity:1; transform:none; filter:none; transition:none; }
-      .wish__hero{ clip-path:none; filter:drop-shadow(0 0 5px rgba(255,252,248,.98)) drop-shadow(0 2px 4px rgba(130,18,55,.5)) drop-shadow(0 4px 14px rgba(150,28,70,.32)); }
-      .wish.is-in .wish__hero{ animation:none; }
-      .wish.is-in .wish__heroWrap::before{ animation:none; opacity:.9; }
-      .wish.is-in .wish__heroWrap::after{ animation:none; opacity:0; }
+    /* ------------------------------------------------------------
+       MOBILE MEDIA QUERY: Teer aur Heart PC ki tarah paas aa jayenge!
+       ------------------------------------------------------------ */
+    @media (max-aspect-ratio: 1/1) {
+      .targetWrap { top: 42%; } /* Heart ko thoda niche center m kiya */
+      .hero__hint { bottom: 20%; } /* Hint ko upar bow k paas laya */
+      .wish { bottom: 20%; max-width: 90%; }
+      .hl__word { font-size: clamp(35px, 14vw, 168px); white-space: nowrap; }
     }
   </style>
 </head>
@@ -535,10 +539,12 @@
 
     <div class="bloom" id="bloom" aria-hidden="true"></div>
 
+    <!-- Yahan Inline fonts hata diye gaye hain taaki CSS ise handle kar sake -->
     <div class="wish" id="wish" aria-hidden="true">
-      <p class="wish__eyebrow" id="wEyebrow" style="position: relative; top: 0px; left: 10px; font-size: 18px;">and&hellip;stay my best friend forever...</p>
-      <h1 class="wish__hero" id="wHero" style="position: relative; top: 10px; left: 0px; font-size: 70px;">𝐻𝐴𝑃𝑃𝑌 𝐵𝐼𝑅𝑇𝐻𝐷𝐴𝑌</h1>      <span class="wish__rule" id="wRule"></span>
-      <p class="wish__eyebrow" id="wEyebrow2" style="position: relative; top: -10px; left: 0px; font-size: 16px;">God bless you, Priya Kumari</p>
+      <p class="wish__eyebrow" id="wEyebrow" style="position: relative; top: 0px; left: 10px;">and&hellip;stay my best friend forever...</p>
+      <h1 class="wish__hero" id="wHero" style="position: relative; top: 10px; left: 0px;">𝐻𝐴𝑃𝑃𝑌 𝐵𝐼𝑅𝑇𝐻𝐷𝐴𝑌</h1>      
+      <span class="wish__rule" id="wRule"></span>
+      <p class="wish__eyebrow" id="wEyebrow2" style="position: relative; top: -10px; left: 0px;">God bless you, Priya Kumari</p>
     </div>
     <button class="replay" id="replay" type="button" hidden>
       <svg viewBox="0 0 24 24" aria-hidden="true" width="15" height="15">
@@ -555,17 +561,14 @@
 
   <p class="sr-only">Happy Birthday. Here&rsquo;s to a wonderful year ahead.</p>
 
-  <!-- DATA DECODER SCRIPT (MOVED TO BOTTOM): Ab ye DOM load hone ke baad aur animation run hone se pehle execute hoga -->
+  <!-- DATA DECODER -->
   <script>
-    (function() {
+    document.addEventListener("DOMContentLoaded", () => {
         const params = new URLSearchParams(window.location.search);
         const encodedData = params.get('d');
         if(encodedData) {
             try {
-                // Decode from base64 to JSON object
                 const data = JSON.parse(decodeURIComponent(escape(atob(encodedData))));
-                
-                // Update 2nd Page Texts
                 if(data.l1) document.getElementById('kEyebrow').innerHTML = data.l1;
                 if(data.l2) {
                     const parts = data.l2.split(' ');
@@ -573,8 +576,6 @@
                     document.getElementById('wLine2').innerHTML = parts.slice(1).join(' ') || '';
                 }
                 if(data.l3) document.getElementById('kSub').innerHTML = data.l3;
-                
-                // Update 3rd Page Texts
                 if(data.l4) document.getElementById('wEyebrow').innerHTML = data.l4;
                 if(data.l5) document.getElementById('wHero').innerHTML = data.l5;
                 if(data.l6) document.getElementById('wEyebrow2').innerHTML = data.l6;
@@ -582,13 +583,11 @@
                 console.error("Invalid link data");
             }
         }
-    })();
+    });
   </script>
 
+  <!-- ORIGINAL STABLE GSAP JS (No Hacks) -->
   <script type="module">
-    /* ============================================================
-       HAPPY BIRTHDAY — JS
-       ============================================================ */
     import gsap from 'https://esm.sh/gsap';
 
     gsap.registerPlugin({
@@ -1131,8 +1130,15 @@
     }
 
     function refreshRig(){
-      const gripX = W * 0.24, gripY = H * 0.76;
-      const heartX = W * 0.5, heartY = H * 0.33;
+      const isMobile = W < H; // MOBILE DETECTION (NATIVE)
+
+      // Mobile mein teer (bow) PC jitna hi paas rakha gaya hai
+      const gripX = isMobile ? W * 0.15 : W * 0.24;
+      const gripY = isMobile ? H * 0.68 : H * 0.76;
+      
+      const heartX = W * 0.5;
+      const heartY = isMobile ? H * 0.42 : H * 0.33; 
+
       const aimRad = Math.atan2(heartX - gripX, gripY - heartY);
       pullUX = -Math.sin(aimRad); pullUY = Math.cos(aimRad);
 
@@ -1441,7 +1447,6 @@
   </audio>
 
   <script>
-    // Screen par click karte hi audio play hogi
     document.body.addEventListener('click', function() {
       var audio = document.getElementById('hiddenAudio');
       audio.play(); 
