@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <!-- MOBILE PAR PC VIEW FORCE KARNE KE LIYE VIEWPORT WIDTH FIX KI HAI -->
+  <meta name="viewport" content="width=1280, viewport-fit=cover" />
   <title>Happy Birthday ♥ — a little film</title>
   <meta name="theme-color" content="#f7e7dc" />
 
@@ -35,15 +36,30 @@
     *{ box-sizing:border-box; margin:0; padding:0; }
     html, body{ height:100%; }
 
+    /* BODY CSS UPDATED: PC WALI SCREEN KO CENTER MEIN RAKHNE KE LIYE */
     body{
       background:#12060c;
       overflow:hidden;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
       cursor:auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      width: 100%;
+      height: 100vh;
     }
 
-    .scene{ position:fixed; inset:0; overflow:hidden; }
+    /* SCENE CSS UPDATED: HAMESHA 16:9 (PC RATIO) PAR LOCK RAHEGA */
+    .scene{ 
+      position: relative; 
+      width: 100%;
+      height: 100%;
+      max-height: 56.25vw;
+      overflow: hidden;
+      background: #12060c;
+    }
 
     .sr-only{
       position:absolute; width:1px; height:1px; padding:0; margin:-1px;
@@ -585,6 +601,7 @@
     })();
   </script>
 
+  <!-- PURANA WALA ORIGINAL JAVASCRIPT CODE (JO PERFECT CHAL RAHA THA) -->
   <script type="module">
     /* ============================================================
        HAPPY BIRTHDAY — JS
