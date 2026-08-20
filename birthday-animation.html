@@ -2,10 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  
-  <!-- ✨ MAGIC FIX: Ye line mobile browser ko order degi ki website ko exactly PC (Desktop Mode) ki tarah open kare -->
-  <meta name="viewport" content="width=1024" />
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Happy Birthday ♥ — a little film</title>
   <meta name="theme-color" content="#f7e7dc" />
 
@@ -17,7 +14,7 @@
   
   <style>
     /* ============================================================
-       HAPPY BIRTHDAY — CSS (PURE STABLE VERSION)
+       HAPPY BIRTHDAY — CSS
        ============================================================ */
     :root{
       var(--paper-0):  #fff6ee;
@@ -245,7 +242,6 @@
     }
     .hl__word{
       display:inline-block;
-      white-space: nowrap; /* ✨ SECOND FIX: Text wrap preventer - naam kabhi kata hua nahi dikhega */
       font-weight:900;
       font-size:clamp(52px, 15vw, 168px);
       letter-spacing:-.02em;
@@ -322,7 +318,6 @@
     .wish__hero{
       font-family:"Great Vibes", cursive; font-weight:400;
       font-size:clamp(40px, 5vw, 86px);
-      white-space: nowrap; /* ✨ SECOND FIX: Protects final wish message on smaller devices */
       line-height:1.1; margin:-.02em 0 .06em;
       background:linear-gradient(180deg, #e85a83 0%, #c41f52 50%, #9c0f42 100%);
       -webkit-background-clip:text; background-clip:text; color:transparent;
@@ -560,7 +555,7 @@
 
   <p class="sr-only">Happy Birthday. Here&rsquo;s to a wonderful year ahead.</p>
 
-  <!-- DATA DECODER SCRIPT (SAFELY AT THE BOTTOM) -->
+  <!-- DATA DECODER SCRIPT (MOVED TO BOTTOM): Ab ye DOM load hone ke baad aur animation run hone se pehle execute hoga -->
   <script>
     (function() {
         const params = new URLSearchParams(window.location.search);
@@ -590,8 +585,10 @@
     })();
   </script>
 
-  <!-- ORIGINAL UNTOUCHED GSAP ANIMATION LOGIC -->
   <script type="module">
+    /* ============================================================
+       HAPPY BIRTHDAY — JS
+       ============================================================ */
     import gsap from 'https://esm.sh/gsap';
 
     gsap.registerPlugin({
